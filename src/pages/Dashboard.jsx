@@ -1,11 +1,43 @@
+import { useEffect, useState } from "react";
+
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 
 import DashboardCard from "../components/DashboardCard";
 import RecentActivity from "../components/RecentActivity";
-import QuickActions from "../components/QuickActions";
+
+import { getDashboard } from "../services/dashboardService";
 
 function Dashboard() {
+
+  const [dashboard, setDashboard] = useState({
+    totalUploads: 0,
+    totalTransactions: 0,
+    matched: 0,
+    unmatched: 0,
+  });
+
+  useEffect(() => {
+
+    loadDashboard();
+
+  }, []);
+
+  const loadDashboard = async () => {
+
+    try {
+
+      const data = await getDashboard();
+
+      setDashboard(data);
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  };
 
   return (
 
@@ -19,63 +51,45 @@ function Dashboard() {
 
         <div className="p-8">
 
-          <h1 className="text-3xl font-bold">
-
-            Dashboard
-
-          </h1>
-
-          <p className="text-gray-500 mb-8">
-
-            Welcome to ReconPro
-
-          </p>
-
           <div className="grid grid-cols-4 gap-6">
 
             <DashboardCard
-            title="Total Uploads"
-            value="18"
-            color="text-blue-600"
-            icon="📁"
-            change="12% This Month"
-          />
+              title="Uploads"
+              value={dashboard.totalUploads}
+              color="text-blue-600"
+              icon="📁"
+              change="Total Uploads"
+            />
 
-          <DashboardCard
-            title="Records"
-            value="25,482"
-            color="text-green-600"
-            icon="📊"
-            change="8% This Month"
-          />
+            <DashboardCard
+              title="Records"
+              value={dashboard.totalTransactions.toLocaleString()}
+              color="text-green-600"
+              icon="📊"
+              change="Processed Records"
+            />
 
-          <DashboardCard
-            title="Average Match"
-            value="96%"
-            color="text-yellow-500"
-            icon="✅"
-            change="3% Improvement"
-          />
+            <DashboardCard
+              title="Matched"
+              value={dashboard.matched.toLocaleString()}
+              color="text-emerald-600"
+              icon="✅"
+              change="Successfully Matched"
+            />
 
-          <DashboardCard
-            title="Needs Review"
-            value="214"
-            color="text-red-600"
-            icon="⚠️"
-            change="15 Pending"
-          />
+            <DashboardCard
+              title="Unmatched"
+              value={dashboard.unmatched.toLocaleString()}
+              color="text-red-600"
+              icon="❌"
+              change="Needs Review"
+            />
 
           </div>
 
-          <div className="mt-8">
+          <div className="mt-10">
 
             <RecentActivity />
-
-          </div>
-
-          <div className="mt-8">
-
-            <QuickActions />
 
           </div>
 

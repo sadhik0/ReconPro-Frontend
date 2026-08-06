@@ -1,44 +1,40 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
 
-  const navigate = useNavigate();
+  const { user } = useAuth();
 
-  const { user, logout } = useAuth();
-
-  const handleLogout = () => {
-
-    logout();
-
-    navigate("/");
-
-  };
+  const today = new Date().toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
 
-    <div className="h-20 bg-white shadow flex items-center justify-between px-10">
+    <div className="h-20 bg-white shadow-sm flex items-center justify-between px-10 border-b">
 
-      <h2 className="text-2xl font-bold">
+      <div>
 
-        Dashboard
+        <h2 className="text-2xl font-bold text-slate-800">
+          Dashboard
+        </h2>
 
-      </h2>
+        <p className="text-sm text-slate-500 mt-1">
+          {today}
+        </p>
 
-      <div className="flex items-center gap-6">
+      </div>
 
-        <div className="font-semibold">
+      <div className="text-right">
 
-          👤 {user?.name}
+        <p className="text-sm text-slate-500">
+          Welcome
+        </p>
 
-        </div>
-
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg"
-        >
-          Logout
-        </button>
+        <h3 className="font-semibold text-slate-800">
+          👋 {user?.name}
+        </h3>
 
       </div>
 
