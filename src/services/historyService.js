@@ -1,29 +1,26 @@
-export function saveHistory(record) {
-  const history =
-    JSON.parse(localStorage.getItem("recon_history")) || [];
+import API from "./api";
 
-  history.unshift(record);
+export const saveHistory = async (historyData) => {
 
-  localStorage.setItem(
-    "recon_history",
-    JSON.stringify(history)
+  const response = await API.post(
+    "/history",
+    historyData
   );
-}
 
-export function getHistory() {
-  return (
-    JSON.parse(localStorage.getItem("recon_history")) || []
-  );
-}
+  return response.data;
 
-export function deleteHistory(id) {
-  const history =
-    JSON.parse(localStorage.getItem("recon_history")) || [];
+};
 
-  const updated = history.filter((item) => item.id !== id);
+export const getHistory = async () => {
 
-  localStorage.setItem(
-    "recon_history",
-    JSON.stringify(updated)
-  );
-}
+  const response = await API.get("/history");
+
+  return response.data;
+
+};
+
+export const deleteHistory = async (id) => {
+
+  await API.delete(`/history/${id}`);
+
+};

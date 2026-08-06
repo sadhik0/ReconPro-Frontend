@@ -14,61 +14,55 @@ import { analyze } from "../services/analysisEngine";
 import { saveHistory } from "../services/historyService";
 
 function Upload() {
-  // Uploaded data
+
   const [companyData, setCompanyData] = useState([]);
   const [bankData, setBankData] = useState([]);
 
-  // Column names
   const [companyColumns, setCompanyColumns] = useState([]);
   const [bankColumns, setBankColumns] = useState([]);
 
-  // User selected comparison fields
   const [selectedFields, setSelectedFields] = useState([]);
 
-  // Analysis Result
   const [analysis, setAnalysis] = useState([]);
 
-  // Search
   const [search, setSearch] = useState("");
 
-  // Filter
   const [filter, setFilter] = useState("All");
 
   // -----------------------------
   // Upload Company Ledger
   // -----------------------------
   const handleCompanyFile = (file) => {
+
     readExcel(file, (data) => {
+
       setCompanyData(data);
 
-      const cols = getColumns(data);
-      setCompanyColumns(cols);
+      setCompanyColumns(getColumns(data));
 
-      console.log("Company Columns:", cols);
-      console.log("Company Rows:", data.length);
     });
+
   };
 
   // -----------------------------
-  // Upload GST / Bank
+  // Upload Bank Statement
   // -----------------------------
   const handleBankFile = (file) => {
+
     readExcel(file, (data) => {
+
       setBankData(data);
 
-      const cols = getColumns(data);
-      setBankColumns(cols);
+      setBankColumns(getColumns(data));
 
-      console.log("GST Columns:", cols);
-      console.log("GST Rows:", data.length);
     });
+
   };
 
   // -----------------------------
   // Analyze
   // -----------------------------
-  const handleAnalyze = (fields) => {
-    console.table(fields);
+  const handleAnalyze = async (fields) => {
 
     setSelectedFields(fields);
 
@@ -79,31 +73,35 @@ function Upload() {
     );
 
     setAnalysis(result);
-    saveHistory({
-  id: Date.now(),
 
-  file:
-    "Reconciliation " +
-    new Date().toLocaleString(),
+    try {
 
-  module: "GST Reconciliation",
+      await saveHistory({
 
-  date: new Date().toLocaleDateString(),
+        filename:
+          "Reconciliation " +
+          new Date().toLocaleString(),
 
-  records: result.length,
+        totalTransactions: result.length,
 
-  match:
-    (
-      result.reduce(
-        (sum, item) => sum + item.score,
-        0
-      ) / result.length
-    ).toFixed(1) + "%",
+        matched: result.filter(
+          item => item.status === "Matched"
+        ).length,
 
-  status: "Completed",
+        unmatched: result.filter(
+          item => item.status !== "Matched"
+        ).length,
 
-  analysis: result,
-});
+        processingTime: 0,
+
+      });
+
+    } catch (err) {
+
+      console.error("History Save Error", err);
+
+    }
+
   };
 
   // -----------------------------
@@ -111,13 +109,16 @@ function Upload() {
   // -----------------------------
   const filteredAnalysis = analysis.filter((row) => {
 
-    // Status Filter
-    if (filter !== "All" && row.status !== filter) {
+    if (
+      filter !== "All" &&
+      row.status !== filter
+    ) {
       return false;
     }
 
-    // Search
-    if (search.trim() === "") return true;
+    if (search.trim() === "") {
+      return true;
+    }
 
     const keyword = search.toLowerCase();
 
@@ -134,13 +135,14 @@ function Upload() {
   });
 
   return (
+
     <div className="min-h-screen bg-gray-100 p-10">
 
       <h1 className="text-3xl font-bold mb-8">
-        ReconPro
-      </h1>
 
-      {/* Upload */}
+        ReconPro
+
+      </h1>
 
       <div className="grid grid-cols-2 gap-6">
 
@@ -156,20 +158,16 @@ function Upload() {
 
       </div>
 
-      {/* Mapper */}
-
       {companyColumns.length > 0 &&
         bankColumns.length > 0 && (
 
-          <ColumnMapper
-            companyColumns={companyColumns}
-            bankColumns={bankColumns}
-            onSave={handleAnalyze}
-          />
+        <ColumnMapper
+          companyColumns={companyColumns}
+          bankColumns={bankColumns}
+          onSave={handleAnalyze}
+        />
 
       )}
-
-      {/* KPI */}
 
       {analysis.length > 0 && (
 
@@ -177,53 +175,44 @@ function Upload() {
 
       )}
 
-      {/* Professional Toolbar */}
+      {analysis.length > 0 && (
 
-{analysis.length > 0 && (
+        <div className="bg-white rounded-xl shadow-md px-6 py-4 mt-8 mb-6">
 
-<div className="bg-white rounded-xl shadow-md px-6 py-4 mt-8 mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
 
-<div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-4 flex-1">
 
-{/* Left Side */}
+              <div className="w-80">
 
-<div className="flex flex-wrap items-center gap-4 flex-1">
+                <SearchBar
+                  search={search}
+                  setSearch={setSearch}
+                />
 
-<div className="w-80">
+              </div>
 
-<SearchBar
-search={search}
-setSearch={setSearch}
-/>
+              <div className="w-52">
 
-</div>
+                <FilterBar
+                  filter={filter}
+                  setFilter={setFilter}
+                />
 
-<div className="w-52">
+              </div>
 
-<FilterBar
-filter={filter}
-setFilter={setFilter}
-/>
+            </div>
 
-</div>
+            <ExportButtons
+              analysis={filteredAnalysis}
+              selectedFields={selectedFields}
+            />
 
-</div>
+          </div>
 
-{/* Right Side */}
+        </div>
 
-<ExportButtons
-analysis={filteredAnalysis}
-selectedFields={selectedFields}
-/>
-
-</div>
-
-</div>
-
-)}
-
-  
-      {/* Result Table */}
+      )}
 
       {analysis.length > 0 && (
 
@@ -235,7 +224,9 @@ selectedFields={selectedFields}
       )}
 
     </div>
+
   );
+
 }
 
 export default Upload;

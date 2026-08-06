@@ -1,24 +1,38 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { deleteHistory } from "../services/historyService";
+
 function HistoryTable({ history }) {
+
   const navigate = useNavigate();
+
   const [search, setSearch] = useState("");
 
   const filtered = history.filter((item) =>
-    item.file.toLowerCase().includes(search.toLowerCase())
+    item.filename.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleDelete = (id) => {
-    if (window.confirm("Delete this reconciliation?")) {
-      // Temporary delete logic
-      alert(`Record ${id} deleted`);
+  const handleDelete = async (id) => {
 
-      // We'll replace this with MongoDB API later
+    if (!window.confirm("Delete this reconciliation?")) return;
+
+    try {
+
+      await deleteHistory(id);
+
+      window.location.reload();
+
+    } catch (err) {
+
+      console.error(err);
+
     }
+
   };
 
   return (
+
     <div className="bg-white rounded-xl shadow p-6">
 
       <div className="flex justify-between items-center mb-6">
@@ -48,17 +62,17 @@ function HistoryTable({ history }) {
 
             <tr>
 
-              <th className="p-3 text-left">File</th>
+              <th className="p-3 text-left">Filename</th>
 
-              <th className="p-3 text-left">Module</th>
+              <th className="p-3 text-left">Upload Date</th>
 
-              <th className="p-3 text-left">Date</th>
+              <th className="p-3 text-left">Transactions</th>
 
-              <th className="p-3 text-left">Records</th>
+              <th className="p-3 text-left">Matched</th>
 
-              <th className="p-3 text-left">Match %</th>
+              <th className="p-3 text-left">Unmatched</th>
 
-              <th className="p-3 text-left">Status</th>
+              <th className="p-3 text-left">Time</th>
 
               <th className="p-3 text-center">Actions</th>
 
@@ -73,30 +87,32 @@ function HistoryTable({ history }) {
               filtered.map((item) => (
 
                 <tr
-                  key={item.id}
+                  key={item._id}
                   className="border-b hover:bg-gray-50"
                 >
 
-                  <td className="p-4">{item.file}</td>
-
-                  <td>{item.module}</td>
-
-                  <td>{item.date}</td>
-
-                  <td>{item.records}</td>
-
-                  <td className="font-bold text-green-600">
-                    {item.match}
+                  <td className="p-4">
+                    {item.filename}
                   </td>
 
                   <td>
+                    {new Date(item.uploadDate).toLocaleString()}
+                  </td>
 
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                  <td>
+                    {item.totalTransactions}
+                  </td>
 
-                      {item.status}
+                  <td className="text-green-600 font-semibold">
+                    {item.matched}
+                  </td>
 
-                    </span>
+                  <td className="text-red-600 font-semibold">
+                    {item.unmatched}
+                  </td>
 
+                  <td>
+                    {item.processingTime}s
                   </td>
 
                   <td>
@@ -104,14 +120,18 @@ function HistoryTable({ history }) {
                     <div className="flex justify-center gap-2">
 
                       <button
-                        onClick={() => navigate(`/history/${item.id}`)}
+                        onClick={() =>
+                          navigate(`/history/${item._id}`)
+                        }
                         className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
                       >
                         View
                       </button>
 
                       <button
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() =>
+                          handleDelete(item._id)
+                        }
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
                       >
                         Delete
@@ -147,7 +167,9 @@ function HistoryTable({ history }) {
       </div>
 
     </div>
+
   );
+
 }
 
 export default HistoryTable;

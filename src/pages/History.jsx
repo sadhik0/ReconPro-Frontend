@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import HistoryTable from "../components/HistoryTable";
@@ -6,7 +8,29 @@ import { getHistory } from "../services/historyService";
 
 function History() {
 
-  const history = getHistory();
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+
+    loadHistory();
+
+  }, []);
+
+  const loadHistory = async () => {
+
+    try {
+
+      const data = await getHistory();
+
+      setHistory(data);
+
+    } catch (err) {
+
+      console.error(err);
+
+    }
+
+  };
 
   return (
 
