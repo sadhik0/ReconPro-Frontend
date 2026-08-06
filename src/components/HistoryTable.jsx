@@ -121,15 +121,6 @@ function HistoryTable({ history }) {
 
                       <button
                         onClick={() =>
-                          navigate(`/history/${item._id}`)
-                        }
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-                      >
-                        View
-                      </button>
-
-                      <button
-                        onClick={() =>
                           handleDelete(item._id)
                         }
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"

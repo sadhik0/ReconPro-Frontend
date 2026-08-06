@@ -15,12 +15,11 @@ function Dashboard() {
     totalTransactions: 0,
     matched: 0,
     unmatched: 0,
+    averageMatch: 0,
   });
 
   useEffect(() => {
-
     loadDashboard();
-
   }, []);
 
   const loadDashboard = async () => {
@@ -31,9 +30,9 @@ function Dashboard() {
 
       setDashboard(data);
 
-    } catch (error) {
+    } catch (err) {
 
-      console.error(error);
+      console.error("Dashboard Error:", err);
 
     }
 
@@ -51,38 +50,46 @@ function Dashboard() {
 
         <div className="p-8">
 
+          <h1 className="text-3xl font-bold mb-2">
+            Dashboard
+          </h1>
+
+          <p className="text-gray-500 mb-8">
+            Welcome to ReconPro
+          </p>
+
           <div className="grid grid-cols-4 gap-6">
 
             <DashboardCard
-              title="Uploads"
+              title="Total Uploads"
               value={dashboard.totalUploads}
-              color="text-blue-600"
               icon="📁"
-              change="Total Uploads"
+              color="text-blue-600"
+              change="Reconciliations"
             />
 
             <DashboardCard
-              title="Records"
+              title="Transactions"
               value={dashboard.totalTransactions.toLocaleString()}
-              color="text-green-600"
               icon="📊"
-              change="Processed Records"
+              color="text-green-600"
+              change="Processed"
             />
 
             <DashboardCard
-              title="Matched"
-              value={dashboard.matched.toLocaleString()}
-              color="text-emerald-600"
-              icon="✅"
-              change="Successfully Matched"
+              title="Average Match"
+              value={`${dashboard.averageMatch}%`}
+              icon="🎯"
+              color="text-yellow-500"
+              change="Across Uploads"
             />
 
             <DashboardCard
-              title="Unmatched"
+              title="Needs Review"
               value={dashboard.unmatched.toLocaleString()}
+              icon="⚠️"
               color="text-red-600"
-              icon="❌"
-              change="Needs Review"
+              change="Unmatched Entries"
             />
 
           </div>

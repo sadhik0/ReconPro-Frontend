@@ -78,18 +78,16 @@ function Upload() {
 
       await saveHistory({
 
-        filename:
-          "Reconciliation " +
-          new Date().toLocaleString(),
+        filename: "Reconciliation",
 
         totalTransactions: result.length,
 
         matched: result.filter(
-          item => item.status === "Matched"
+          item => item.status === "Exact Match"
         ).length,
 
         unmatched: result.filter(
-          item => item.status !== "Matched"
+          item => item.status === "No Match"
         ).length,
 
         processingTime: 0,
