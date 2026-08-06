@@ -1,0 +1,47 @@
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+import HistoryTable from "../components/HistoryTable";
+
+import { getHistory } from "../services/historyService";
+
+function History() {
+
+  const history = getHistory();
+
+  return (
+
+    <div className="bg-gray-100 min-h-screen">
+
+      <Sidebar />
+
+      <div className="ml-64">
+
+        <Navbar />
+
+        <div className="p-8">
+
+          <h1 className="text-3xl font-bold">
+
+            Reconciliation History
+
+          </h1>
+
+          <p className="text-gray-500 mb-8">
+
+            View previous reconciliations
+
+          </p>
+
+          <HistoryTable history={history} />
+
+        </div>
+
+      </div>
+
+    </div>
+
+  );
+
+}
+
+export default History;
