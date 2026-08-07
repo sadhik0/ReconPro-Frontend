@@ -56,7 +56,9 @@ function History() {
 
           </p>
 
-          <HistoryTable history={history} />
+          <HistoryTable
+          history={history}
+          setHistory={setHistory} />
 
         </div>
 
