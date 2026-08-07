@@ -139,7 +139,7 @@ function Upload() {
  // ----Instructions---
 
       <h1 className="text-3xl font-bold">
-          ReconPro
+          Reconciliation Workspace
         </h1>
 
         <p className="text-gray-500 mb-6">
