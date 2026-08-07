@@ -1,29 +1,35 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { getRecentActivity } from "../services/dashboardService";
 
 function RecentActivity() {
 
   const navigate = useNavigate();
 
-  const history = [
-    {
-      file: "GST July",
-      records: 1248,
-      match: "98%",
-      date: "04 Aug",
-    },
-    {
-      file: "Bank August",
-      records: 2215,
-      match: "95%",
-      date: "03 Aug",
-    },
-    {
-      file: "Vendor Ledger",
-      records: 918,
-      match: "91%",
-      date: "01 Aug",
-    },
-  ];
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+
+    loadActivity();
+
+  }, []);
+
+  const loadActivity = async () => {
+
+    try {
+
+      const data = await getRecentActivity();
+
+      setHistory(data);
+
+    } catch (err) {
+
+      console.error("Recent Activity Error:", err);
+
+    }
+
+  };
 
   return (
 
@@ -39,59 +45,77 @@ function RecentActivity() {
 
         <button
           onClick={() => navigate("/history")}
-          className="text-blue-600 font-semibold"
+          className="text-blue-600 font-semibold hover:underline"
         >
           View All →
         </button>
 
       </div>
 
-      {history.map((item, index) => (
+      {history.length > 0 ? (
 
-        <div
-          key={index}
-          className="border rounded-lg p-4 mb-4 hover:bg-gray-50 transition"
-        >
+        history.map((item) => (
 
-          <div className="flex justify-between">
+          <div
+            key={item._id}
+            className="border rounded-lg p-4 mb-4 hover:bg-gray-50 transition"
+          >
 
-            <div>
+            <div className="flex justify-between items-center">
 
-              <h3 className="font-semibold text-lg">
+              <div>
 
-                {item.file}
+                <h3 className="font-semibold text-lg">
 
-              </h3>
+                  {item.filename}
 
-              <p className="text-gray-500">
+                </h3>
 
-                {item.records} Records
+                <p className="text-gray-500">
 
-              </p>
+                  {item.totalTransactions} Transactions
 
-            </div>
+                </p>
 
-            <div className="text-right">
+              </div>
 
-              <p className="font-bold text-green-600">
+              <div className="text-right">
 
-                {item.match}
+                <p className="font-bold text-green-600">
 
-              </p>
+                  {item.matched} Matched
 
-              <p className="text-gray-500">
+                </p>
 
-                {item.date}
+                <p className="text-sm text-red-500">
 
-              </p>
+                  {item.unmatched} Unmatched
+
+                </p>
+
+                <p className="text-xs text-gray-400 mt-1">
+
+                  {new Date(item.uploadDate).toLocaleDateString()}
+
+                </p>
+
+              </div>
 
             </div>
 
           </div>
 
+        ))
+
+      ) : (
+
+        <div className="text-center py-12 text-gray-500">
+
+          No recent reconciliation history found.
+
         </div>
 
-      ))}
+      )}
 
     </div>
 
