@@ -51,7 +51,7 @@ function Dashboard() {
         <div className="p-8">
 
           <h1 className="text-3xl font-bold mb-2">
-            Dashboard
+            ReconPro
           </h1>
 
           <p className="text-gray-500 mb-8">

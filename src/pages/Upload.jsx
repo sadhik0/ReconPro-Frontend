@@ -136,11 +136,56 @@ function Upload() {
 
     <div className="min-h-screen bg-gray-100 p-10">
 
-      <h1 className="text-3xl font-bold mb-8">
+ // ----Instructions---
 
-        ReconPro
+      <h1 className="text-3xl font-bold">
+          ReconPro
+        </h1>
 
-      </h1>
+        <p className="text-gray-500 mb-6">
+          Upload your Excel files and reconcile transactions in minutes.
+        </p>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
+
+          <div className="flex items-center gap-2 mb-3">
+
+            <span className="text-2xl">📘</span>
+
+            <h2 className="text-lg font-semibold text-blue-800">
+              Before You Begin
+            </h2>
+
+          </div>
+
+          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+
+            <li>
+              Upload <strong>two Excel files</strong>:
+              <strong> Company Ledger</strong> and
+              <strong> GST / Bank Statement</strong>.
+            </li>
+
+            <li>
+              Ensure the <strong>first row</strong> of each Excel file contains the
+              correct <strong>column headers</strong>.
+            </li>
+
+            <li>
+              After uploading both files, map the corresponding columns carefully.
+            </li>
+
+            <li>
+              Click <strong>Analyze</strong> to generate reconciliation results.
+            </li>
+
+            <li className="text-blue-700">
+              💡 Selecting more matching fields improves reconciliation accuracy.
+            </li>
+
+          </ul>
+
+</div>
 
       <div className="grid grid-cols-2 gap-6">
 
