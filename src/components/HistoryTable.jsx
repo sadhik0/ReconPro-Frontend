@@ -62,17 +62,17 @@ function HistoryTable({ history }) {
 
             <tr>
 
-              <th className="p-3 text-left">Filename</th>
+              <th className="p-3 text-center">Filename</th>
 
-              <th className="p-3 text-left">Upload Date</th>
+              <th className="p-3 text-center">Upload Date</th>
 
-              <th className="p-3 text-left">Transactions</th>
+              <th className="p-3 text-center">Transactions</th>
 
-              <th className="p-3 text-left">Matched</th>
+              <th className="p-3 text-center">Matched</th>
 
-              <th className="p-3 text-left">Unmatched</th>
+              <th className="p-3 text-center">Unmatched</th>
 
-              <th className="p-3 text-left">Time</th>
+              <th className="p-3 text-center">Time</th>
 
               <th className="p-3 text-center">Actions</th>
 
@@ -91,30 +91,29 @@ function HistoryTable({ history }) {
                   className="border-b hover:bg-gray-50"
                 >
 
-                  <td className="p-4">
-                    {item.filename}
-                  </td>
+                  <td className="p-4 text-center">
+                  {item.filename}
+                </td>
 
-                  <td>
-                    {new Date(item.uploadDate).toLocaleString()}
-                  </td>
+                <td className="text-center">
+                  {new Date(item.uploadDate).toLocaleString()}
+                </td>
 
-                  <td>
-                    {item.totalTransactions}
-                  </td>
+                <td className="text-center">
+                  {item.totalTransactions}
+                </td>
 
-                  <td className="text-green-600 font-semibold">
-                    {item.matched}
-                  </td>
+                <td className="text-center text-green-600 font-semibold">
+                  {item.matched}
+                </td>
 
-                  <td className="text-red-600 font-semibold">
-                    {item.unmatched}
-                  </td>
+                <td className="text-center text-red-600 font-semibold">
+                  {item.unmatched}
+                </td>
 
-                  <td>
-                    {item.processingTime}s
-                  </td>
-
+                <td className="text-center">
+                  {item.processingTime}s
+                </td>
                   <td>
 
                     <div className="flex justify-center gap-2">
