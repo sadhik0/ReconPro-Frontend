@@ -12,15 +12,15 @@ function Navbar() {
 
   return (
 
-    <div className="h-20 bg-white shadow-sm flex items-center justify-between px-10 border-b">
+    <div className="h-20 bg-white/5 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-10">
 
       <div>
 
-        <h2 className="text-2xl font-bold text-slate-800">
+        <h2 className="text-2xl font-bold text-white">
           Dashboard
         </h2>
 
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-white/50 mt-1">
           {today}
         </p>
 
@@ -28,11 +28,11 @@ function Navbar() {
 
       <div className="text-right">
 
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-white/50">
           Welcome
         </p>
 
-        <h3 className="font-semibold text-slate-800">
+        <h3 className="font-semibold text-white">
           👋 {user?.name}
         </h3>
 

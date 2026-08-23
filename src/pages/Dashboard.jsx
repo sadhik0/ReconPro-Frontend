@@ -40,7 +40,7 @@ function Dashboard() {
 
   return (
 
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-[linear-gradient(135deg,#0f0e0e_0%,#4a0d14_45%,#0f0e0e_100%)] text-white">
 
       <Sidebar />
 
@@ -54,7 +54,7 @@ function Dashboard() {
             ReconPro
           </h1>
 
-          <p className="text-gray-500 mb-8">
+          <p className="text-white/60 mb-8">
             Welcome to ReconPro
           </p>
 
@@ -64,7 +64,7 @@ function Dashboard() {
               title="Total Uploads"
               value={dashboard.totalUploads}
               icon="📁"
-              color="text-blue-600"
+              color="text-white"
               change="Reconciliations"
             />
 
@@ -72,7 +72,7 @@ function Dashboard() {
               title="Transactions"
               value={dashboard.totalTransactions.toLocaleString()}
               icon="📊"
-              color="text-green-600"
+              color="text-[#4ADE80]"
               change="Processed"
             />
 
@@ -80,7 +80,7 @@ function Dashboard() {
               title="Average Match"
               value={`${dashboard.averageMatch}%`}
               icon="🎯"
-              color="text-yellow-500"
+              color="text-[#FBBF24]"
               change="Across Uploads"
             />
 
@@ -88,7 +88,7 @@ function Dashboard() {
               title="Needs Review"
               value={dashboard.unmatched.toLocaleString()}
               icon="⚠️"
-              color="text-red-600"
+              color="text-[#fe2e4b]"
               change="Unmatched Entries"
             />
 

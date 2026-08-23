@@ -39,21 +39,21 @@ function HistoryTable({ history, setHistory }) {
 
   return (
 
-    <div className="bg-white rounded-xl shadow p-6">
+    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
 
       <div className="flex justify-between items-center mb-6">
 
         <input
           type="text"
           placeholder="Search reconciliation..."
-          className="border rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-white/10 bg-white/5 text-white placeholder-white/40 rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-[#fe2e4b]"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
 
         <button
           onClick={() => navigate("/upload")}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
+          className="bg-[#fe2e4b] hover:bg-[#e0233e] text-white px-5 py-2 rounded-lg transition"
         >
           + New Reconciliation
         </button>
@@ -64,23 +64,23 @@ function HistoryTable({ history, setHistory }) {
 
         <table className="w-full">
 
-          <thead className="bg-gray-100">
+          <thead className="bg-white/5">
 
             <tr>
 
-              <th className="p-3 text-center">Filename</th>
+              <th className="p-3 text-center text-white/70">Filename</th>
 
-              <th className="p-3 text-center">Upload Date</th>
+              <th className="p-3 text-center text-white/70">Upload Date</th>
 
-              <th className="p-3 text-center">Transactions</th>
+              <th className="p-3 text-center text-white/70">Transactions</th>
 
-              <th className="p-3 text-center">Matched</th>
+              <th className="p-3 text-center text-white/70">Matched</th>
 
-              <th className="p-3 text-center">Unmatched</th>
+              <th className="p-3 text-center text-white/70">Unmatched</th>
 
-              <th className="p-3 text-center">Time</th>
+              <th className="p-3 text-center text-white/70">Time</th>
 
-              <th className="p-3 text-center">Actions</th>
+              <th className="p-3 text-center text-white/70">Actions</th>
 
             </tr>
 
@@ -94,30 +94,30 @@ function HistoryTable({ history, setHistory }) {
 
                 <tr
                   key={item._id}
-                  className="border-b hover:bg-gray-50"
+                  className="border-b border-white/10 hover:bg-white/5"
                 >
 
-                  <td className="p-4 text-center">
+                  <td className="p-4 text-center text-white">
                     {item.filename}
                   </td>
 
-                  <td className="text-center">
+                  <td className="text-center text-white/70">
                     {new Date(item.uploadDate).toLocaleString()}
                   </td>
 
-                  <td className="text-center">
+                  <td className="text-center text-white/70">
                     {item.totalTransactions}
                   </td>
 
-                  <td className="text-center text-green-600 font-semibold">
+                  <td className="text-center text-[#4ADE80] font-semibold">
                     {item.matched}
                   </td>
 
-                  <td className="text-center text-red-600 font-semibold">
+                  <td className="text-center text-[#fe2e4b] font-semibold">
                     {item.unmatched}
                   </td>
 
-                  <td className="text-center">
+                  <td className="text-center text-white/70">
                     {item.processingTime}s
                   </td>
 
@@ -125,7 +125,7 @@ function HistoryTable({ history, setHistory }) {
 
                     <button
                       onClick={() => handleDelete(item._id)}
-                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded"
+                      className="bg-[#fe2e4b]/20 hover:bg-[#fe2e4b]/30 text-[#fe2e4b] border border-[#fe2e4b]/40 px-4 py-1 rounded transition"
                     >
                       Delete
                     </button>
@@ -142,7 +142,7 @@ function HistoryTable({ history, setHistory }) {
 
                 <td
                   colSpan="7"
-                  className="text-center py-10 text-gray-500"
+                  className="text-center py-10 text-white/50"
                 >
                   No reconciliation history found.
                 </td>

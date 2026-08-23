@@ -1,0 +1,212 @@
+:root {
+  --rp-bg-a: #0f0e0e;
+  --rp-bg-b: #4a0d14;
+  --rp-glass: rgba(255, 255, 255, 0.06);
+  --rp-glass-border: rgba(255, 255, 255, 0.14);
+  --rp-ink: #ffffff;
+  --rp-ink-soft: #c9c6c6;
+  --rp-ink-faint: #8a8888;
+  --rp-red: #fe2e4b;
+  --rp-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+.rp-login-screen {
+  min-height: 100vh;
+  color: var(--rp-ink);
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 15%, var(--rp-bg-b) 0%, transparent 55%),
+    linear-gradient(135deg, var(--rp-bg-a) 0%, #1a0608 45%, var(--rp-bg-a) 100%);
+}
+
+.rp-splash-canvas {
+  z-index: 1;
+}
+
+.rp-card {
+  position: relative;
+  z-index: 2;
+  width: 380px;
+  background: var(--rp-glass);
+  border: 1px solid var(--rp-glass-border);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-radius: 18px;
+  box-shadow: var(--rp-shadow);
+  padding: 38px 32px 30px;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rp-rise 0.5s ease forwards 0.1s;
+}
+
+@keyframes rp-rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rp-card { animation: none; opacity: 1; transform: none; }
+}
+
+.rp-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.rp-brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rp-red);
+}
+
+.rp-subtitle {
+  color: var(--rp-ink-soft);
+  font-size: 14px;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+.rp-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--rp-glass-border);
+  border-radius: 9px;
+  padding: 3px;
+  margin-bottom: 22px;
+}
+.rp-tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+  color: var(--rp-ink-soft);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.rp-tab-active {
+  background: var(--rp-red);
+  color: #fff;
+}
+
+.rp-field {
+  margin-bottom: 16px;
+}
+.rp-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rp-ink-soft);
+  display: block;
+  margin: 0 0 6px 2px;
+}
+.rp-field input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--rp-glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--rp-ink);
+  font-size: 13.5px;
+  font-family: "Inter", sans-serif;
+}
+.rp-field input::placeholder {
+  color: var(--rp-ink-faint);
+}
+.rp-field input:focus {
+  outline: 2px solid var(--rp-red);
+  outline-offset: 1px;
+  border-color: var(--rp-red);
+}
+
+.rp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+.rp-remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--rp-ink-soft);
+}
+
+.rp-link {
+  color: var(--rp-red);
+  font-size: 12.5px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.rp-link:hover {
+  text-decoration: underline;
+}
+.rp-link-strong {
+  margin-left: 4px;
+}
+
+.rp-btn {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 12px;
+  border-radius: 9px;
+  border: none;
+  background: var(--rp-red);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 18px;
+  box-shadow: 0 8px 20px -6px rgba(254, 46, 75, 0.55);
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.rp-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+}
+.rp-btn:active::after {
+  width: 260px;
+  height: 260px;
+  opacity: 1;
+  transition: width 0s, height 0s, opacity 0s;
+}
+
+.rp-btn:hover {
+  transform: translateY(-1px);
+}
+.rp-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.rp-foot-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--rp-ink-faint);
+  margin-top: 18px;
+}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
+import "./Login.css";
 
 function Register() {
   const navigate = useNavigate();
@@ -33,120 +34,94 @@ function Register() {
     try {
       setLoading(true);
 
-      await registerUser({
-        name,
-        email,
-        password,
-      });
+      await registerUser({ name, email, password });
 
       alert("Registration Successful");
 
       navigate("/");
-
     } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Registration Failed"
-      );
+      alert(error.response?.data?.message || "Registration Failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center">
-
-      <div className="bg-white shadow-xl rounded-2xl w-[470px] p-8">
-
-        <h1 className="text-4xl font-bold text-blue-600 text-center">
+    <div className="rp-login-screen">
+      <div className="rp-card" style={{ width: 420 }}>
+        <div className="rp-brand">
           ReconPro
-        </h1>
-
-        <p className="text-center text-gray-500 mt-2 mb-8">
-          Create Your Account
-        </p>
+        </div>
+        <p className="rp-subtitle">Create your account.</p>
 
         <form onSubmit={handleRegister}>
-
-          <label>Name</label>
-
-          <input
-            type="text"
-            className="border w-full rounded-lg p-3 mt-2 mb-5"
-            placeholder="Enter Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          <label>Email</label>
-
-          <input
-            type="email"
-            className="border w-full rounded-lg p-3 mt-2 mb-5"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <label>Password</label>
-
-          <input
-            type="password"
-            className="border w-full rounded-lg p-3 mt-2 mb-5"
-            placeholder="Create Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <label>Confirm Password</label>
-
-          <input
-            type="password"
-            className="border w-full rounded-lg p-3 mt-2"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-
-          <div className="mt-6 flex items-center">
-
+          <div className="rp-field">
+            <label htmlFor="name">Name</label>
             <input
-              type="checkbox"
-              checked={robotChecked}
-              onChange={(e) => setRobotChecked(e.target.checked)}
+              id="name"
+              type="text"
+              placeholder="Enter name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-
-            <span className="ml-3">
-              I'm not a robot
-            </span>
-
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 mt-8 disabled:bg-gray-400"
-          >
-            {loading ? "Creating Account..." : "Register"}
-          </button>
+          <div className="rp-field">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="name@company.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
+          <div className="rp-field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Create password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="rp-field">
+            <label htmlFor="confirmPassword">Confirm password</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="rp-row" style={{ justifyContent: "flex-start" }}>
+            <label className="rp-remember">
+              <input
+                type="checkbox"
+                checked={robotChecked}
+                onChange={(e) => setRobotChecked(e.target.checked)}
+              />
+              I'm not a robot
+            </label>
+          </div>
+
+          <button type="submit" className="rp-btn" disabled={loading}>
+            {loading ? "Creating account…" : "Register"}
+          </button>
         </form>
 
-        <div className="text-center mt-8">
-
-          Already have an account?
-
-          <Link
-            to="/"
-            className="text-blue-600 font-semibold ml-2"
-          >
+        <p className="rp-foot-note">
+          Already have an account?{" "}
+          <Link to="/" className="rp-link rp-link-strong">
             Login
           </Link>
-
-        </div>
-
+        </p>
       </div>
-
     </div>
   );
 }

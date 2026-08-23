@@ -144,21 +144,21 @@ function ExportButtons({ analysis, selectedFields }) {
 
       <button
         onClick={exportExcel}
-        className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg"
+        className="bg-[#4ADE80]/20 hover:bg-[#4ADE80]/30 text-[#4ADE80] border border-[#4ADE80]/40 px-5 py-2 rounded-lg transition"
       >
         📗 Excel
       </button>
 
       <button
         onClick={exportCSV}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
+        className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-2 rounded-lg transition"
       >
         📄 CSV
       </button>
 
       <button
         onClick={exportPDF}
-        className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg"
+        className="bg-[#fe2e4b] hover:bg-[#e0233e] text-white px-5 py-2 rounded-lg transition"
       >
         📕 PDF
       </button>

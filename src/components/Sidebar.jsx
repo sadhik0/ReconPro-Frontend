@@ -35,16 +35,16 @@ const handleLogout = () => {
 
   return (
 
-    <div className="w-64 h-screen bg-slate-900 text-white fixed left-0 top-0 shadow-xl">
+    <div className="w-64 h-screen bg-[#0f0e0e] text-white fixed left-0 top-0 border-r border-white/10 z-10">
 
       {/* Logo */}
-      <div className="py-8 border-b border-slate-700">
+      <div className="py-8 border-b border-white/10">
 
         <h1 className="text-3xl font-bold text-center tracking-wide">
           ReconPro
         </h1>
 
-        <p className="text-xs text-slate-400 text-center mt-2">
+        <p className="text-xs text-white/40 text-center mt-2">
           Financial Reconciliation System
         </p>
 
@@ -62,8 +62,8 @@ const handleLogout = () => {
               `flex items-center gap-4 mx-4 px-5 py-3 rounded-lg transition-all duration-200
               ${
                 isActive
-                  ? "bg-blue-600 shadow-md"
-                  : "hover:bg-slate-800"
+                  ? "bg-[#fe2e4b] shadow-[0_8px_20px_-6px_rgba(254,46,75,0.55)]"
+                  : "hover:bg-white/5"
               }`
             }
           >
@@ -87,7 +87,7 @@ const handleLogout = () => {
 
         <button
   onClick={handleLogout}
-  className="w-full bg-red-600 hover:bg-red-700 py-3 rounded-lg font-semibold transition"
+  className="w-full bg-[#fe2e4b] hover:bg-[#e0233e] py-3 rounded-lg font-semibold transition"
 >
   🚪 Logout
 </button>

@@ -34,7 +34,7 @@ function History() {
 
   return (
 
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-[linear-gradient(135deg,#0f0e0e_0%,#4a0d14_45%,#0f0e0e_100%)] text-white">
 
       <Sidebar />
 
@@ -50,7 +50,7 @@ function History() {
 
           </h1>
 
-          <p className="text-gray-500 mb-8">
+          <p className="text-white/60 mb-8">
 
             View previous reconciliations
 

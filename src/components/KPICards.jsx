@@ -21,8 +21,8 @@ function KPICards({ analysis }) {
   ).toFixed(1);
 
   const Card = ({ title, value, color }) => (
-    <div className="bg-white rounded-xl shadow p-6">
-      <p className="text-gray-500">{title}</p>
+    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+      <p className="text-white/50">{title}</p>
 
       <h2 className={`text-3xl font-bold mt-2 ${color}`}>
         {value}
@@ -36,31 +36,31 @@ function KPICards({ analysis }) {
       <Card
         title="Records"
         value={total}
-        color="text-blue-600"
+        color="text-white"
       />
 
       <Card
         title="Match %"
         value={average + "%"}
-        color="text-green-600"
+        color="text-[#4ADE80]"
       />
 
       <Card
         title="Exact"
         value={exact}
-        color="text-green-600"
+        color="text-[#4ADE80]"
       />
 
       <Card
         title="Partial"
         value={partial}
-        color="text-yellow-500"
+        color="text-[#FBBF24]"
       />
 
       <Card
         title="No Match"
         value={noMatch}
-        color="text-red-600"
+        color="text-[#fe2e4b]"
       />
 
     </div>

@@ -134,7 +134,7 @@ function Upload() {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-[linear-gradient(135deg,#0f0e0e_0%,#4a0d14_45%,#0f0e0e_100%)] text-white p-10">
 
  
 
@@ -142,33 +142,33 @@ function Upload() {
           ReconPro
         </h1>
 
-        <p className="text-gray-500 mb-6">
+        <p className="text-white/60 mb-6">
           Upload your Excel files and reconcile transactions in minutes.
         </p>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 border-l-4 border-l-[#fe2e4b] rounded-2xl p-5 mb-8">
 
           <div className="flex items-center gap-2 mb-3">
 
             <span className="text-2xl">📘</span>
 
-            <h2 className="text-lg font-semibold text-blue-800">
+            <h2 className="text-lg font-semibold text-white">
               Before You Begin
             </h2>
 
           </div>
 
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+          <ul className="list-disc pl-6 space-y-2 text-white/70">
 
             <li>
-              Upload <strong>two Excel files</strong>:
-              <strong> Company Ledger</strong> and
-              <strong> GST / Bank Statement</strong>.
+              Upload <strong className="text-white">two Excel files</strong>:
+              <strong className="text-white"> Company Ledger</strong> and
+              <strong className="text-white"> GST / Bank Statement</strong>.
             </li>
 
             <li>
-              Ensure the <strong>first row</strong> of each Excel file contains the
-              correct <strong>column headers</strong>.
+              Ensure the <strong className="text-white">first row</strong> of each Excel file contains the
+              correct <strong className="text-white">column headers</strong>.
             </li>
 
             <li>
@@ -176,10 +176,10 @@ function Upload() {
             </li>
 
             <li>
-              Click <strong>Analyze</strong> to generate reconciliation results.
+              Click <strong className="text-white">Analyze</strong> to generate reconciliation results.
             </li>
 
-            <li className="text-blue-700">
+            <li className="text-[#fe2e4b]">
               💡 Selecting more matching fields improves reconciliation accuracy.
             </li>
 
@@ -220,7 +220,7 @@ function Upload() {
 
       {analysis.length > 0 && (
 
-        <div className="bg-white rounded-xl shadow-md px-6 py-4 mt-8 mb-6">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-6 py-4 mt-8 mb-6">
 
           <div className="flex flex-wrap items-center justify-between gap-4">
 

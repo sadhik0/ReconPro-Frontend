@@ -6,13 +6,13 @@ function DashboardCard({
   change,
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border hover:shadow-lg transition-all duration-300 p-6">
+    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 p-6">
 
       <div className="flex justify-between items-center">
 
         <div>
 
-          <p className="text-gray-500 text-sm font-medium">
+          <p className="text-white/50 text-sm font-medium">
             {title}
           </p>
 
@@ -23,7 +23,7 @@ function DashboardCard({
           </h2>
 
           {change && (
-            <p className="text-green-600 text-sm mt-2 font-medium">
+            <p className={`text-sm mt-2 font-medium ${color} opacity-70`}>
               ↑ {change}
             </p>
           )}
