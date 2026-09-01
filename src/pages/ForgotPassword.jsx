@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
+import {
+  forgotPassword,
+  resetPassword as resetPasswordAPI,
+} from "../services/authService";
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -10,23 +14,28 @@ function ForgotPassword() {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const generatedOTP = "123456";
 
-  const sendOTP = () => {
+  const sendOTP = async () => {
     if (!email) {
       alert("Enter Email");
       return;
     }
-    alert("OTP Sent Successfully!\n\nDemo OTP : 123456");
-    setOtpSent(true);
-  };
 
-  const resetPassword = () => {
-    if (otp !== generatedOTP) {
-      alert("Invalid OTP");
-      return;
+    try {
+      setLoading(true);
+      const data = await forgotPassword(email);
+      alert(data.message || "OTP sent to your email");
+      setOtpSent(true);
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to send OTP");
+    } finally {
+      setLoading(false);
     }
+  };
+  const resetPassword = async () => {
     if (newPassword.length < 6) {
       alert("Password should contain at least 6 characters");
       return;
@@ -35,8 +44,17 @@ function ForgotPassword() {
       alert("Passwords do not match");
       return;
     }
-    alert("Password Reset Successfully");
-    navigate("/");
+
+    try {
+      setLoading(true);
+      const data = await resetPasswordAPI({ email, otp, newPassword });
+      alert(data.message || "Password Reset Successfully");
+      navigate("/");
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to reset password");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,8 +78,8 @@ function ForgotPassword() {
               />
             </div>
 
-            <button className="rp-btn" onClick={sendOTP}>
-              Send OTP
+            <button className="rp-btn" onClick={sendOTP} disabled={loading}>
+              {loading ? "Sending…" : "Send OTP"}
             </button>
           </>
         )}
@@ -102,8 +120,8 @@ function ForgotPassword() {
               />
             </div>
 
-            <button className="rp-btn" onClick={resetPassword}>
-              Reset password
+            <button className="rp-btn" onClick={resetPassword} disabled={loading}>
+              {loading ? "Resetting…" : "Reset password"}
             </button>
           </>
         )}

@@ -210,3 +210,29 @@
   color: var(--rp-ink-faint);
   margin-top: 18px;
 }
+
+.rp-password-wrap {
+  position: relative;
+}
+
+.rp-field-password input {
+  padding-right: 42px;
+}
+
+.rp-eye-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  color: var(--rp-ink-faint);
+}
+
+.rp-eye-toggle:hover {
+  color: var(--rp-ink);
+}
