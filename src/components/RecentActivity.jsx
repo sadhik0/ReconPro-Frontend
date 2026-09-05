@@ -2,18 +2,27 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getRecentActivity } from "../services/dashboardService";
+import { useAuth } from "../context/AuthContext";
+import { useGuestData } from "../context/GuestDataContext";
 
 function RecentActivity() {
 
   const navigate = useNavigate();
 
+  const { isGuest } = useAuth();
+  const { guestHistory } = useGuestData();
+
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
 
-    loadActivity();
+    if (isGuest) {
+      setHistory(guestHistory);
+    } else {
+      loadActivity();
+    }
 
-  }, []);
+  }, [isGuest, guestHistory]);
 
   const loadActivity = async () => {
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import UploadCard from "../components/UploadCard";
 import ColumnMapper from "../components/ColumnMapper";
@@ -12,8 +13,13 @@ import { readExcel } from "../services/excelReader";
 import { getColumns } from "../utils/columnMapper";
 import { analyze } from "../services/analysisEngine";
 import { saveHistory } from "../services/historyService";
+import { useAuth } from "../context/AuthContext";
+import { useGuestData } from "../context/GuestDataContext";
 
 function Upload() {
+
+  const { isGuest } = useAuth();
+  const { addGuestRecord } = useGuestData();
 
   const [companyData, setCompanyData] = useState([]);
   const [bankData, setBankData] = useState([]);
@@ -74,29 +80,39 @@ function Upload() {
 
     setAnalysis(result);
 
-    try {
+    const historyPayload = {
 
-      await saveHistory({
+      filename: "Reconciliation",
 
-        filename: "Reconciliation",
+      totalTransactions: result.length,
 
-        totalTransactions: result.length,
+      matched: result.filter(
+        item => item.status === "Exact Match"
+      ).length,
 
-        matched: result.filter(
-          item => item.status === "Exact Match"
-        ).length,
+      unmatched: result.filter(
+        item => item.status === "No Match"
+      ).length,
 
-        unmatched: result.filter(
-          item => item.status === "No Match"
-        ).length,
+      processingTime: 0,
 
-        processingTime: 0,
+    };
 
-      });
+    if (isGuest) {
 
-    } catch (err) {
+      addGuestRecord(historyPayload);
 
-      console.error("History Save Error", err);
+    } else {
+
+      try {
+
+        await saveHistory(historyPayload);
+
+      } catch (err) {
+
+        console.error("History Save Error", err);
+
+      }
 
     }
 
@@ -138,6 +154,13 @@ function Upload() {
 
  
 
+      {isGuest && (
+        <div className="bg-[#fe2e4b]/10 border border-[#fe2e4b]/30 text-[#fe2e4b] text-sm rounded-xl px-4 py-3 mb-6">
+          You're browsing as a Guest — nothing is saved. Data disappears on refresh or logout.{" "}
+          <Link to="/register" className="underline font-semibold">Create an account</Link> to keep it.
+        </div>
+      )}
+
       <h1 className="text-3xl font-bold">
           ReconPro
         </h1>
@@ -150,7 +173,10 @@ function Upload() {
 
           <div className="flex items-center gap-2 mb-3">
 
-            <span className="text-2xl">📘</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#fe2e4b]">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
 
             <h2 className="text-lg font-semibold text-white">
               Before You Begin

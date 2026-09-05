@@ -30,7 +30,7 @@ function DashboardCard({
 
         </div>
 
-        <div className="text-5xl opacity-80">
+        <div className={`flex items-center justify-center ${color} opacity-70`}>
           {icon}
         </div>
 

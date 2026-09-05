@@ -5,6 +5,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
 
   const [user, setUser] = useState(null);
+  const [isGuest, setIsGuest] = useState(false);
 
   useEffect(() => {
 
@@ -17,7 +18,7 @@ export function AuthProvider({ children }) {
 
   }, []);
 
-  const login = (data) => {
+    const login = (data) => {
 
     localStorage.setItem("token", data.token);
 
@@ -27,6 +28,7 @@ export function AuthProvider({ children }) {
     );
 
     setUser(data.user);
+    setIsGuest(false);
 
   };
 
@@ -36,15 +38,28 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("user");
 
     setUser(null);
+    setIsGuest(false);
+
+  };
+
+    const loginAsGuest = () => {
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    setUser({ name: "Guest", email: null });
+    setIsGuest(true);
 
   };
 
   return (
     <AuthContext.Provider
-      value={{
+       value={{
         user,
+        isGuest,
         login,
         logout,
+        loginAsGuest,
       }}
     >
       {children}

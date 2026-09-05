@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import { AuthProvider } from "./context/AuthContext";
+import { GuestDataProvider } from "./context/GuestDataContext";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 
@@ -22,6 +23,7 @@ function App() {
   return (
 
     <AuthProvider>
+      <GuestDataProvider>
 
       <BrowserRouter>
 
@@ -80,6 +82,7 @@ function App() {
 
       </BrowserRouter>
 
+      </GuestDataProvider>
     </AuthProvider>
 
   );

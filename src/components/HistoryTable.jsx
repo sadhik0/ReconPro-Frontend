@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { deleteHistory } from "../services/historyService";
 
-function HistoryTable({ history, setHistory }) {
+function HistoryTable({ history, setHistory, isGuest, removeGuestRecord }) {
 
   const navigate = useNavigate();
 
@@ -16,6 +16,11 @@ function HistoryTable({ history, setHistory }) {
   const handleDelete = async (id) => {
 
     if (!window.confirm("Delete this reconciliation?")) {
+      return;
+    }
+
+    if (isGuest) {
+      removeGuestRecord(id);
       return;
     }
 

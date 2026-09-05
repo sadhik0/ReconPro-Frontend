@@ -7,11 +7,11 @@ import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, loginAsGuest } = useAuth();
 
   const [email, setEmail] = useState(
-  () => localStorage.getItem("rp-remember-email") || ""
-);
+    () => localStorage.getItem("rp-remember-email") || ""
+  );
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [enableSplash, setEnableSplash] = useState(false);
@@ -42,17 +42,24 @@ function Login() {
 
       const data = await loginUser({ email, password });
       login(data);
-            if (rememberMe) {
+
+      if (rememberMe) {
         localStorage.setItem("rp-remember-email", email);
       } else {
         localStorage.removeItem("rp-remember-email");
       }
+
       navigate("/dashboard");
     } catch (error) {
       alert(error.response?.data?.message || "Login Failed");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGuestLogin = () => {
+    loginAsGuest();
+    navigate("/dashboard");
   };
 
   return (
@@ -84,7 +91,7 @@ function Login() {
             />
           </div>
 
-                    <div className="rp-field rp-field-password">
+          <div className="rp-field rp-field-password">
             <label htmlFor="password">Password</label>
             <div className="rp-password-wrap">
               <input
@@ -94,7 +101,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-                            <button
+              <button
                 type="button"
                 className="rp-eye-toggle"
                 onClick={() => setShowPassword((v) => !v)}
@@ -140,6 +147,23 @@ function Login() {
             Register
           </Link>
         </p>
+
+        <button
+          type="button"
+          onClick={handleGuestLogin}
+          className="rp-link"
+          style={{
+            display: "block",
+            width: "100%",
+            textAlign: "center",
+            marginTop: "10px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Continue as Guest →
+        </button>
       </div>
     </div>
   );

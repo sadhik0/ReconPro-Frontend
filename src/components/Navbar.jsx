@@ -33,7 +33,7 @@ function Navbar() {
         </p>
 
         <h3 className="font-semibold text-white">
-          👋 {user?.name}
+           {user?.name}
         </h3>
 
       </div>
