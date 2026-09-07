@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 function ResultTable({ analysis, selectedFields }) {
   if (!analysis.length) return null;
 
@@ -57,9 +58,10 @@ function ResultTable({ analysis, selectedFields }) {
           {analysis.map((row, index) => (
 
             <tr
-              key={index}
+              key={row.id ?? `${row.status}-${index}`}
               className="hover:bg-white/5"
             >
+
 
               {selectedFields.map((field) => {
 
@@ -82,7 +84,7 @@ function ResultTable({ analysis, selectedFields }) {
                           : "bg-[#fe2e4b]/10"
                       }`}
                     >
-                      {companyValue}
+                      {companyValue ?? "—"}
                     </td>
 
                     <td
@@ -92,7 +94,7 @@ function ResultTable({ analysis, selectedFields }) {
                           : "bg-[#fe2e4b]/10"
                       }`}
                     >
-                      {bankValue}
+                      {bankValue ?? "—"}
                     </td>
                   </>
                 );

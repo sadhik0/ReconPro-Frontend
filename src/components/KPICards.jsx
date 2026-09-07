@@ -15,6 +15,15 @@ function KPICards({ analysis }) {
     (r) => r.status === "No Match"
   ).length;
 
+  const companyOnly = analysis.filter(
+  (r) => r.status === "Company-only"
+).length;
+
+const bankOnly = analysis.filter(
+  (r) => r.status === "Bank-only"
+).length;
+
+
   const average = (
     analysis.reduce((sum, r) => sum + r.score, 0) /
     total
@@ -31,7 +40,8 @@ function KPICards({ analysis }) {
   );
 
   return (
-    <div className="grid grid-cols-5 gap-5 mt-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-5 mt-8">
+
 
       <Card
         title="Records"
@@ -62,6 +72,18 @@ function KPICards({ analysis }) {
         value={noMatch}
         color="text-[#fe2e4b]"
       />
+
+      <Card
+          title="Company-only"
+          value={companyOnly}
+          color="text-[#fe2e4b]"
+        />
+
+      <Card
+          title="Bank-only"
+          value={bankOnly}
+          color="text-[#fe2e4b]"
+        />
 
     </div>
   );

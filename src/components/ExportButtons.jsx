@@ -11,20 +11,24 @@ function ExportButtons({ analysis, selectedFields }) {
   // Prepare Export Data
   // ----------------------------
 
-  const exportData = analysis.map((row) => {
+ const exportData = analysis.map((row) => {
+  const obj = {};
 
-    const obj = {};
+  selectedFields.forEach((field) => {
+    obj[`Company: ${field.company}`] =
+      row.company?.[field.company] ?? "";
 
-    selectedFields.forEach((field) => {
-      obj[field.company] = row.company[field.company];
-    });
-
-    obj["Match %"] = row.score;
-    obj["Status"] = row.status;
-
-    return obj;
-
+    obj[`Bank: ${field.bank}`] =
+      row.bank?.[field.bank] ?? "";
   });
+
+  obj["Match %"] = row.score;
+  obj["Status"] = row.status;
+  obj["Source"] = row.source ?? "";
+
+  return obj;
+});
+
 
   // ----------------------------
   // Excel Export
@@ -94,25 +98,27 @@ function ExportButtons({ analysis, selectedFields }) {
     const doc = new jsPDF();
 
     const head = [[
-      ...selectedFields.map(
-        (f) => f.company
-      ),
-      "Match %",
-      "Status",
-    ]];
+        ...selectedFields.flatMap((field) => [
+          `Company: ${field.company}`,
+          `Bank: ${field.bank}`,
+        ]),
+        "Match %",
+        "Status",
+        "Source",
+      ]];
+
 
     const body = analysis.map((row) => [
-
-      ...selectedFields.map(
-        (f) =>
-          row.company[f.company]
-      ),
+      ...selectedFields.flatMap((field) => [
+        row.company?.[field.company] ?? "—",
+        row.bank?.[field.bank] ?? "—",
+      ]),
 
       row.score + "%",
-
       row.status,
-
+      row.source ?? "",
     ]);
+
 
     doc.setFontSize(18);
 

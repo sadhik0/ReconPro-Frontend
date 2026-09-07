@@ -80,23 +80,26 @@ function Upload() {
 
     setAnalysis(result);
 
-    const historyPayload = {
+    const matchedCount = result.filter(
+  (item) => item.status === "Exact Match"
+).length;
 
-      filename: "Reconciliation",
+const unmatchedCount = result.filter((item) =>
+  [
+    "No Match",
+    "Company-only",
+    "Bank-only",
+  ].includes(item.status)
+).length;
 
-      totalTransactions: result.length,
+const historyPayload = {
+  filename: "Reconciliation",
+  totalTransactions: result.length,
+  matched: matchedCount,
+  unmatched: unmatchedCount,
+  processingTime: 0,
+};
 
-      matched: result.filter(
-        item => item.status === "Exact Match"
-      ).length,
-
-      unmatched: result.filter(
-        item => item.status === "No Match"
-      ).length,
-
-      processingTime: 0,
-
-    };
 
     if (isGuest) {
 
@@ -137,14 +140,20 @@ function Upload() {
     const keyword = search.toLowerCase();
 
     return selectedFields.some((field) => {
+  const companyValue = String(
+    row.company?.[field.company] ?? ""
+  ).toLowerCase();
 
-      const value = String(
-        row.company[field.company] ?? ""
-      ).toLowerCase();
+  const bankValue = String(
+    row.bank?.[field.bank] ?? ""
+  ).toLowerCase();
 
-      return value.includes(keyword);
+  return (
+    companyValue.includes(keyword) ||
+    bankValue.includes(keyword)
+  );
+});
 
-    });
 
   });
 
