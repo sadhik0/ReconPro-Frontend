@@ -67,9 +67,9 @@ function Login() {
       {enableSplash && <SplashCursor />}
 
       <div className="rp-card">
-        <div className="rp-brand">
+        <h1 className="rp-brand">
           ReconPro
-        </div>
+        </h1>
         <p className="rp-subtitle">Sign in to continue reconciling.</p>
 
         <div className="rp-tabs">
